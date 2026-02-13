@@ -1,0 +1,5 @@
+{
+  "name": "Gravity Station",
+  "description": "A space-themed couple's diary application with real-time sync and animations.",
+  "requestFramePermissions": []
+}
