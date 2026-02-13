@@ -34,6 +34,10 @@
                         'fade-in': 'fadeIn 0.3s ease-out forwards',
                         'moon-phase': 'moonPhase 25s ease-in-out infinite',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'heartbeat': 'heartbeat 1.5s ease-in-out infinite',
+                        'warp-expand': 'warpExpand 0.8s cubic-bezier(0.7, 0, 0.84, 0) forwards',
+                        'draw-line': 'drawLine 3s ease-in-out forwards',
+                        'meteor-fall': 'meteorFall 1.5s linear infinite',
                     },
                     keyframes: {
                         orbitRotate: {
@@ -55,6 +59,24 @@
                             '50%': { 
                                 boxShadow: 'inset -22px 0px 8px 0 rgba(26,26,46,0.9)' 
                             }
+                        },
+                        heartbeat: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.15)' },
+                        },
+                        warpExpand: {
+                            '0%': { transform: 'scale(1)', opacity: '1' },
+                            '100%': { transform: 'scale(20)', opacity: '0' }
+                        },
+                        drawLine: {
+                            '0%': { strokeDashoffset: '1000' },
+                            '100%': { strokeDashoffset: '0' }
+                        },
+                        meteorFall: {
+                            '0%': { transform: 'rotate(-45deg) translateX(200%)', opacity: '0' },
+                            '10%': { opacity: '1' },
+                            '80%': { opacity: '1' },
+                            '100%': { transform: 'rotate(-45deg) translateX(-200%)', opacity: '0' }
                         }
                     }
                 }
@@ -69,6 +91,11 @@
         /* Hide scrollbar for horizontal nav */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* --- Intro Animation Specifics --- */
+        .glow-path {
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+        }
     </style>
 <script type="importmap">
 {

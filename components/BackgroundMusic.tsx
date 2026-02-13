@@ -2,27 +2,26 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Music, VolumeX } from 'lucide-react';
 import { BGM_URL } from '../constants';
 
-export const BackgroundMusic: React.FC = () => {
+interface Props {
+  shouldPlay?: boolean; // New prop to trigger play from parent
+}
+
+export const BackgroundMusic: React.FC<Props> = ({ shouldPlay }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Handle external play trigger (from IntroScreen)
   useEffect(() => {
-    // Attempt autoplay with low volume on mount, but handle browser blocking gracefully
-    if (audioRef.current) {
-        audioRef.current.volume = 0.4;
-        const playPromise = audioRef.current.play();
-        
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                setIsPlaying(true);
-            }).catch(() => {
-                // Auto-play was prevented.
-                // We don't force it, just let the UI show "paused" state.
-                setIsPlaying(false);
-            });
-        }
+    if (shouldPlay && audioRef.current && !isPlaying) {
+      audioRef.current.volume = 0.4;
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch((e) => console.log("Autoplay prevented:", e));
+      }
     }
-  }, []);
+  }, [shouldPlay]);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -36,7 +35,7 @@ export const BackgroundMusic: React.FC = () => {
   };
 
   return (
-    <div className="absolute top-4 right-4 z-50">
+    <div className="absolute top-4 right-4 z-50 animate-fade-in">
       <audio ref={audioRef} src={BGM_URL} loop />
       
       <button 
@@ -60,7 +59,7 @@ export const BackgroundMusic: React.FC = () => {
         )}
       </button>
       
-      {/* Visual equalizer bars (CSS only) */}
+      {/* Visual equalizer bars */}
       {isPlaying && (
           <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 flex gap-[2px] h-[3px]">
               <div className="w-[2px] bg-moon-primary animate-pulse" style={{ animationDuration: '0.6s' }}></div>
