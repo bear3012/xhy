@@ -22,6 +22,7 @@ export interface TimelineEvent {
   title: string;
   description: string;
   type: 'special' | 'normal';
+  is_captain?: boolean; // New field for identity
 }
 
 export interface GalleryItem {
